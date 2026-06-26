@@ -1,0 +1,132 @@
+:root {
+    --bg-color: #0b0f19;
+    --card-bg: rgba(22, 30, 49, 0.7);
+    --text-color: #f1f5f9;
+    --accent-color: #38bdf8;
+    --sidebar-width: 260px;
+}
+
+[data-theme="light"] {
+    --bg-color: #f8fafc;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --text-color: #0f172a;
+    --accent-color: #0284c7;
+}
+
+/* Mode Smart Mirror - Minimalisme Noir & Blanc */
+[data-layout="mirror"] {
+    --bg-color: #000000;
+    --card-bg: transparent;
+    --text-color: #ffffff;
+    --accent-color: #ffffff;
+    font-family: 'Courier New', Courier, monospace;
+}
+[data-layout="mirror"] .card {
+    border: 1px solid #ffffff !important;
+    backdrop-filter: none;
+    border-radius: 0px;
+}
+[data-layout="mirror"] .sidebar { display: none; }
+[data-layout="mirror"] .main-content { margin-left: 0; width: 100%; }
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    transition: background 0.4s, color 0.4s;
+    overflow-x: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+.sidebar .section-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #64748b;
+    margin: 15px 0 5px 0;
+}
+.sidebar button, .sidebar select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Content Area */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex-grow: 1;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+#clock { font-size: 1.5rem; font-weight: bold; color: var(--accent-color); }
+
+/* Grid Layout */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* Widgets Cards */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: grab;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.3s;
+}
+.card:active { cursor: grabbing; }
+.card.dragging { opacity: 0.3; border: 2px dashed var(--accent-color); }
+
+/* Status elements */
+.status { padding: 2px 6px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; float: right;}
+.green { background: #16a34a; color: white; }
+.red { background: #dc2626; color: white; }
+
+/* Components Specifics */
+textarea { width: 100%; height: 80px; background: transparent; border: none; color: var(--text-color); resize: none; outline: none;}
+iframe { width: 100%; height: 150px; margin-top: 10px; border-radius: 8px; }
+.speed-grid { display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold;}
+
+/* Calculatrice */
+#calc-screen { width: 100%; padding: 10px; background: #000; color: #0f0; text-align: right; border: none; margin-bottom: 10px; font-size: 1.2rem; }
+.calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+.calc-buttons button { padding: 10px; background: #334155; border: none; color: white; cursor: pointer; border-radius: 4px;}
+.calc-buttons button.op { background: var(--accent-color); }
+.calc-buttons button.green-btn { background: #16a34a; }
+.calc-buttons button.red-btn { background: #dc2626; }
+
+/* Audio Controls */
+.audio-player { display: flex; flex-direction: column; gap: 10px; }
+.track-info { display: flex; gap: 10px; align-items: center; }
+.cover { width: 40px; height: 40px; background: var(--accent-color); display:flex; align-items:center; justify-content:center; border-radius:8px;}
+.audio-controls { display: flex; align-items: center; gap: 10px; }
+input[type="range"] { flex-grow: 1; }
+
+/* Animations */
+.fade-in { animation: fadeIn 1s ease-in; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

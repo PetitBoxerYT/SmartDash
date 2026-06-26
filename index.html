@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark" data-layout="default">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giga Dashboard Intelligent</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">🧠 SmartDash</div>
+        <hr>
+        <div class="section-title">Profils</div>
+        <select id="profile-select">
+            <option value="maison">🏠 Maison</option>
+            <option value="travail">💼 Travail</option>
+            <option value="nuit">💤 Nuit</option>
+        </select>
+        
+        <hr>
+        <div class="section-title">Configuration</div>
+        <button id="theme-toggle">🌗 Changer de Thème</button>
+        <button id="mirror-toggle">🪞 Mode Miroir</button>
+
+        <hr>
+        <div class="section-title">Gestion Modules</div>
+        <div class="toggle-switches" id="module-toggles">
+            </div>
+    </aside>
+
+    <div class="main-content">
+        <header>
+            <h1 id="welcome-title">Tableau de Bord</h1>
+            <div id="clock">00:00:00</div>
+        </header>
+
+        <main class="grid-container" id="dashboard-grid">
+            
+            <div class="card" draggable="true" id="w-network" data-category="maison">
+                <h3>🟦 Réseau & Serveurs</h3>
+                <ul class="status-list">
+                    <li>Routeur: <span class="status green" id="net-router">En ligne</span></li>
+                    <li>Proxy HA: <span class="status green" id="net-ha">En ligne</span></li>
+                    <li>Serveur Node: <span class="status green">🟢 Actif</span></li>
+                    <li>Mon NAS: <span class="status red" id="net-nas">Hors ligne</span></li>
+                </ul>
+            </div>
+
+            <div class="card" draggable="true" id="w-speedtest" data-category="travail">
+                <h3>🟦 Vitesse Internet</h3>
+                <div class="speed-grid">
+                    <div>⬇️ <span id="speed-down">940</span> Mbps</div>
+                    <div>⬆️ <span id="speed-up">410</span> Mbps</div>
+                    <div>⏱️ <span id="speed-ping">8</span> ms</div>
+                </div>
+            </div>
+
+            <div class="card" draggable="true" id="w-weather" data-category="maison">
+                <h3>🌦️ Météo (3 Jours)</h3>
+                <div class="weather-main">
+                    <span class="temp" id="weather-temp">--°C</span>
+                    <span id="weather-desc">Chargement...</span>
+                </div>
+                <div class="forecast" id="weather-forecast"></div>
+            </div>
+
+            <div class="card" draggable="true" id="w-crypto" data-category="travail">
+                <h3>📈 Bourse & Crypto</h3>
+                <div class="crypto-row">
+                    <span>Bitcoin (BTC):</span>
+                    <span id="btc-price">-- €</span> <span id="btc-change" class="trend">--</span>
+                </div>
+                <div class="crypto-row">
+                    <span>Ethereum (ETH):</span>
+                    <span id="eth-price">-- €</span> <span id="eth-change" class="trend">--</span>
+                </div>
+            </div>
+
+            <div class="card" draggable="true" id="w-audio" data-category="maison">
+                <h3>🎵 Lecteur Audio</h3>
+                <div class="audio-player">
+                    <div class="track-info">
+                        <div class="cover">🎵</div>
+                        <div>
+                            <b id="audio-title">Lo-Fi Beats Local</b><br>
+                            <small>Ambient Archive</small>
+                        </div>
+                    </div>
+                    <audio id="local-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+                    <div class="audio-controls">
+                        <button id="audio-play">▶️ Play</button>
+                        <input type="range" id="audio-progress" value="0" max="100">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" draggable="true" id="w-youtube" data-category="travail">
+                <h3>📺 YouTube Mini</h3>
+                <input type="text" id="yt-url" placeholder="Coller un lien YouTube ID...">
+                <iframe id="yt-player" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+
+            <div class="card" draggable="true" id="w-wisdom" data-category="maison">
+                <h3>🧠 Conseil & Motivation</h3>
+                <blockquote id="quote-text" class="fade-in">"La meilleure façon de prédire l'avenir est de le créer."</blockquote>
+                <p id="tip-text" style="font-size: 0.9rem; color: gray; margin-top: 10px;">💡 Astuce Tech : Utilise des raccourcis clavier pour doubler ta productivité.</p>
+            </div>
+
+            <div class="card" draggable="true" id="w-sleep" data-category="nuit">
+                <h3>💤 Cycle de Sommeil</h3>
+                <p>Heure de coucher idéale : <b id="sleep-time">22:45</b></p>
+                <small>Conseil : Évite les écrans 30 min avant cette heure.</small>
+            </div>
+
+            <div class="card" draggable="true" id="w-notes" data-category="maison">
+                <h3>📝 Notes Rapides</h3>
+                <textarea id="note-area" placeholder="Sauvegarde automatique locale..."></textarea>
+            </div>
+
+            <div class="card" draggable="true" id="w-calc" data-category="travail">
+                <h3>🧮 Calculatrice</h3>
+                <input type="text" id="calc-screen" readonly>
+                <div class="calc-buttons">
+                    <button onclick="pressCalc('7')">7</button><button onclick="pressCalc('8')">8</button><button onclick="pressCalc('9')">9</button><button onclick="pressCalc('/')" class="op">/</button>
+                    <button onclick="pressCalc('4')">4</button><button onclick="pressCalc('5')">5</button><button onclick="pressCalc('6')">6</button><button onclick="pressCalc('*')" class="op">*</button>
+                    <button onclick="pressCalc('1')">1</button><button onclick="pressCalc('2')">2</button><button onclick="pressCalc('3')">3</button><button onclick="pressCalc('-')" class="op">-</button>
+                    <button onclick="pressCalc('0')">0</button><button onclick="clearCalc()" class="red-btn">C</button><button onclick="evalCalc()" class="green-btn">=</button><button onclick="pressCalc('+')" class="op">+</button>
+                </div>
+            </div>
+
+            <div class="card" draggable="true" id="w-sys" data-category="maison">
+                <h3>🧹 Ressources Système</h3>
+                <div class="sys-bar">CPU Temp: <span id="cpu-temp">--</span>°C</div>
+                <div class="sys-bar">RAM Utilisée: <span id="ram-usage">--</span>%</div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
